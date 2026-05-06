@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neeti Kaur — Product Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F4F1EC;
+      --ink: #1A1916;
+      --muted: #6B6862;
+      --accent: #C84B2F;
+      --accent-light: #E8614010;
+      --border: #DDD9D2;
+      --white: #FDFCFA;
+      --card-bg: #EFECE6;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGE ROUTING ── */
+    .page { display: none; animation: fadeIn 0.45s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── SHARED NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 17px; font-weight: 500;
+      color: var(--ink); cursor: default; letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-actions { display: flex; gap: 10px; }
+    .btn-outline {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.04em; padding: 7px 18px;
+      border: 1px solid var(--border); border-radius: 100px;
+      background: transparent; color: var(--ink);
+      cursor: pointer; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+    /* ── HOME PAGE ── */
+    .home-hero {
+      max-width: 860px; margin: 0 auto;
+      padding: 90px 60px 60px;
+    }
+    .eyebrow {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 36px;
+    }
+    .eyebrow::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .hero-title {
+      font-family: var(--serif); font-size: clamp(52px, 7vw, 82px);
+      font-weight: 400; line-height: 1.08; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 40px;
+    }
+    .hero-title em { color: var(--accent); font-style: italic; }
+    .hero-divider {
+      width: 60px; height: 1px; background: var(--border); margin-bottom: 36px;
+    }
+    .hero-intro {
+      font-size: 16px; color: var(--muted); line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* About */
+    .about-section {
+      max-width: 860px; margin: 0 auto;
+      padding: 60px 60px 80px;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .about-heading {
+      font-family: var(--serif); font-size: 36px; font-weight: 500;
+      line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 22px;
+    }
+    .about-body { font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 600px; margin-bottom: 32px; }
+    .skills-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-size: 12px; font-weight: 400; padding: 6px 14px;
+      border: 1px solid var(--border); border-radius: 100px;
+      color: var(--ink); background: transparent;
+    }
+
+    /* Case Studies */
+    .work-section {
+      max-width: 860px; margin: 0 auto;
+      padding: 60px 60px 100px;
+      border-top: 1px solid var(--border);
+    }
+    .work-heading {
+      font-family: var(--serif); font-size: clamp(32px, 4vw, 46px);
+      font-weight: 400; margin-bottom: 40px; letter-spacing: -0.02em;
+    }
+    .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+    .card-body { padding: 28px 28px 20px; }
+    .card-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .card-title {
+      font-family: var(--serif); font-size: 26px; font-weight: 500;
+      line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 14px;
+    }
+    .card-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .tag {
+      font-size: 11px; padding: 4px 10px;
+      border: 1px solid var(--border); border-radius: 100px; color: var(--muted);
+    }
+    .card-image {
+      width: 100%; height: 200px; background: #1A1916;
+      display: flex; align-items: flex-end; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .card-image-coming {
+      width: 100%; height: 200px; background: var(--card-bg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .coming-label {
+      font-size: 11px; color: var(--border); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .view-btn {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.7); color: #fff;
+      text-align: center; padding: 14px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; border: none; font-family: var(--sans);
+      transition: background 0.2s;
+    }
+    .view-btn:hover { background: var(--accent); }
+    /* Phone mockup inside card */
+    .phone-mockup {
+      width: 100%; height: 200px; display: flex; align-items: center; justify-content: center;
+      background: #141412; position: relative;
+    }
+    .phone-mockup::before {
+      content: '';
+      width: 70px; height: 120px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      position: absolute; left: 30%; top: 50%; transform: translateY(-50%) rotate(-8deg);
+      background: linear-gradient(135deg, #2a2a28, #1a1a18);
+    }
+    .phone-mockup::after {
+      content: '';
+      width: 70px; height: 120px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      position: absolute; left: 38%; top: 50%; transform: translateY(-50%) rotate(4deg);
+      background: linear-gradient(135deg, #C84B2F55, #33312e);
+    }
+
+    /* ── HOME FOOTER ── */
+    .home-footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 100%;
+    }
+    .footer-name { font-family: var(--serif); font-size: 15px; }
+    .footer-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .footer-meta { font-size: 12px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+    .footer-link:hover { color: var(--accent); }
+    .footer-copy { font-size: 11px; color: var(--border); margin-top: 4px; }
+
+    /* ── CASE STUDY PAGE ── */
+    .cs-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 60px;
+    }
+    .cs-home-btn {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.02em; color: var(--muted);
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s; padding: 0;
+    }
+    .cs-home-btn:hover { color: var(--accent); }
+    .cs-home-btn svg { transition: transform 0.2s; }
+    .cs-home-btn:hover svg { transform: translateX(-3px); }
+
+    .cs-hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 60px 60px;
+    }
+    .cs-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 28px;
+    }
+    .cs-title {
+      font-family: var(--serif); font-size: clamp(48px, 6vw, 72px);
+      font-weight: 400; line-height: 1.05; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 22px;
+    }
+    .cs-title em { color: var(--accent); font-style: italic; }
+    .cs-subtitle {
+      font-size: 16px; color: var(--muted); line-height: 1.7;
+      max-width: 620px; margin-bottom: 44px;
+    }
+
+    /* Meta row */
+    .cs-meta {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; margin-bottom: 60px;
+    }
+    .cs-meta-item {
+      padding: 22px 24px;
+      border-right: 1px solid var(--border);
+    }
+    .cs-meta-item:last-child { border-right: none; }
+    .cs-meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .cs-meta-value { font-family: var(--serif); font-size: 15px; font-weight: 500; color: var(--ink); }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; background: var(--ink); border-radius: 12px;
+      overflow: hidden; margin-bottom: 80px;
+    }
+    .stat-item {
+      padding: 32px 36px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-value {
+      font-family: var(--serif); font-size: 42px; font-weight: 500;
+      color: var(--accent); line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em;
+    }
+    .stat-label { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.4; }
+    .stat-sub { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; }
+
+    /* Case study body */
+    .cs-body { max-width: 900px; margin: 0 auto; padding: 0 60px 100px; }
+
+    .cs-section { margin-bottom: 80px; }
+    .cs-section-num {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .cs-section-heading {
+      font-family: var(--serif); font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
+      margin-bottom: 24px; color: var(--ink);
+    }
+    .cs-section-heading em { font-style: italic; color: var(--accent); }
+    .cs-section-body {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      max-width: 680px;
+    }
+
+    /* Three column problem */
+    .three-col {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px; margin-top: 36px;
+    }
+    .three-col-item {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px;
+    }
+    .three-col-title {
+      font-family: var(--serif); font-size: 17px; font-weight: 500;
+      margin-bottom: 10px; color: var(--ink);
+    }
+    .three-col-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* Research pills */
+    .research-pills {
+      display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap;
+    }
+    .research-pill {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 10px 20px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--ink);
+    }
+
+    /* 5W grid */
+    .fivew-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px; margin-top: 32px;
+    }
+    .fivew-item {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 22px;
+    }
+    .fivew-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .fivew-title { font-family: var(--serif); font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+    .fivew-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* Competitive table */
+    .comp-table {
+      width: 100%; border-collapse: collapse; margin-top: 32px;
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .comp-table th {
+      background:#dfdfdf; color:#282828;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-align: left; padding: 14px 18px;
+    }
+    .comp-table td {
+      padding: 13px 18px; border-bottom: 1px solid var(--border);
+      font-size: 13px; color: var(--muted); vertical-align: top;
+      line-height: 1.5;
+    }
+
+    /* Key insights */
+    .key-insights {
+      background: var(--ink); border-radius: 10px;
+      padding: 28px 28px; margin-top: 28px;
+    }
+    .key-insights-label {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px; font-weight: 500;
+    }
+    .insight-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .insight-item:last-child { margin-bottom: 0; }
+    .insight-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+    .insight-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+    /* Journey */
+    .journey-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px;
+    }
+    .journey-col {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px;
+    }
+    .journey-col-title {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    }
+    .journey-step {
+      display: flex; gap: 12px; align-items: flex-start;
+      margin-bottom: 12px; font-size: 13px; color: var(--ink);
+    }
+    .journey-step-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .journey-step-note { font-size: 11px; color: var(--muted); margin-top: 3px; font-style: italic; }
+
+    /* Pain → Need */
+    .pain-need-list { margin-top: 28px; }
+    .pain-need-item {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; margin-bottom: 14px;
+    }
+    .pain-side, .need-side { padding: 20px 22px; }
+    .pain-side { background: #FDF0EE; border-right: 1px solid var(--border); }
+    .need-side { background: var(--white); }
+    .pain-tag, .need-tag {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .pain-tag { color: var(--accent); }
+    .need-tag { color: #4A7C5A; }
+    .pain-text, .need-text { font-size: 13px; line-height: 1.55; color: var(--ink); }
+
+    /* Rejected idea */
+    .rejected-box {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px; margin-top: 28px;
+    }
+    .rejected-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .rejected-title { font-family: var(--serif); font-size: 17px; margin-bottom: 14px; color: var(--ink); }
+    .rejected-item {
+      display: flex; gap: 10px; font-size: 13px; color: var(--muted);
+      margin-bottom: 8px; line-height: 1.5;
+    }
+    .rejected-x { color: var(--accent); font-weight: 700; }
+
+    /* Solution grid */
+    .solution-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-top: 32px;
+    }
+    .solution-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .solution-card:hover { border-color: var(--accent); }
+    .solution-num {
+      font-family: var(--serif); font-size: 30px; font-weight: 400;
+      color: var(--border); line-height: 1; margin-bottom: 12px;
+    }
+    .solution-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+    .solution-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* Business goals */
+    .goals-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px; margin-top: 32px;
+    }
+    .goal-card {
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 28px 24px; text-align: center;
+    }
+    .goal-for {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .goal-heading { font-family: var(--serif); font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+    .goal-subheading { font-family: var(--serif); font-size: 20px; color: var(--muted); font-weight: 400; margin-bottom: 16px; }
+    .goal-body { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+    /* Results */
+    .results-bar {
+      background: var(--accent); border-radius: 12px;
+      padding: 48px 40px; margin-top: 32px;
+    }
+    .results-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .result-item { text-align: center; border-right: 1px solid rgba(255,255,255,0.2); padding: 0 32px; }
+    .result-item:last-child { border-right: none; }
+    .result-label {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); margin-bottom: 8px;
+    }
+    .result-value {
+      font-family: var(--serif); font-size: 52px; font-weight: 400;
+      color: #fff; line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .result-sub { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .results-note {
+      margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.65);
+      line-height: 1.6; text-align: center;
+    }
+
+    /* Reflection */
+    .reflection-box {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 44px 44px; margin-top: 32px;
+    }
+    .quote-mark {
+      font-family: var(--serif); font-size: 72px; color: var(--border);
+      line-height: 0.5; margin-bottom: 20px; font-weight: 400;
+    }
+    .reflection-quote {
+      font-family: var(--serif); font-size: 26px; font-weight: 400;
+      line-height: 1.35; color: var(--ink); margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    .reflection-quote em { color: var(--accent); font-style: italic; }
+    .reflection-body { font-size: 14px; color: var(--muted); line-height: 1.75; max-width: 600px; }
+
+    /* CS Footer */
+    .cs-footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cs-footer-name { font-family: var(--serif); font-size: 16px; }
+    .cs-footer-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .cs-footer-links { display: flex; gap: 20px; align-items: center; }
+    .cs-footer-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+    .cs-footer-link:hover { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav { padding: 16px 24px; }
+      .home-hero, .about-section, .work-section { padding-left: 24px; padding-right: 24px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .cs-hero, .cs-body { padding-left: 24px; padding-right: 24px; }
+      .three-col, .fivew-grid, .solution-grid, .goals-grid { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr; }
+      .pain-need-item { grid-template-columns: 1fr; }
+      .pain-side { border-right: none; border-bottom: 1px solid var(--border); }
+      .results-grid { grid-template-columns: 1fr; }
+      .result-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 16px 0; }
+      .result-item:last-child { border-bottom: none; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .home-footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .cs-footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <nav class="nav">
+    <div class="nav-logo">Neeti Kaur<span>.</span></div>
+    <div class="nav-actions">
+      <a href="#" class="btn-outline">View Resume</a>
+      <a href="https://linkedin.com" target="_blank" class="btn-outline">Visit LinkedIn</a>
+    </div>
+  </nav>
+
+  <section class="home-hero">
+    <div class="eyebrow">Product Designer — Bengaluru, India</div>
+    <h1 class="hero-title">
+      Designing things<br>people <em>love</em> to use.
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-intro">
+      I'm Neeti Kaur — a product designer who turns everyday frustrations
+      into elegant digital experiences. I work at the intersection of
+      empathy, clarity, and craft.
+    </p>
+  </section>
+
+  <section class="about-section">
+    <div class="section-label">About Me</div>
+    <h2 class="about-heading">Empathy-first.<br>Detail-obsessed.</h2>
+    <p class="about-body">
+      I'm a product designer based in Bengaluru who believes the best digital products feel
+      effortless. My process is rooted in user research — listening, questioning assumptions,
+      and turning complex problems into simple, intuitive experiences. Outside of design, I'm
+      usually exploring the city, searching for great filter coffee, or getting annoyed by
+      parking problems.
+    </p>
+    <div class="skills-chips">
+      <span class="chip">User Flow</span>
+      <span class="chip">UX Research</span>
+      <span class="chip">Interaction Design</span>
+      <span class="chip">Competitor Analysis</span>
+      <span class="chip">Prototyping</span>
+      <span class="chip">Figma</span>
+      <span class="chip">User Persona</span>
+      <span class="chip">Wireframing</span>
+    </div>
+  </section>
+
+  <section class="work-section">
+    <div class="section-label">Selected Work</div>
+    <h2 class="work-heading">Case Studies</h2>
+    <div class="cards-grid">
+
+      <!-- Flipkart Card -->
+      <div class="card" id="flipkart-card">
+        <div class="card-body">
+          <div class="card-eyebrow">Case Study · Mobile App · UX/UI</div>
+          <h3 class="card-title">Flipkart<br>Brand Store</h3>
+          <p class="card-desc">
+            Designing a dedicated brand storefront inside India's largest e-commerce
+            platform — to solve a discoverability problem with an ₹80 lakh monthly
+            revenue impact.
+          </p>
+          <div class="card-tags">
+            <span class="tag">UX Research</span>
+            <span class="tag">Competitor Analysis</span>
+            <span class="tag">Design System</span>
+            <span class="tag">User Journey</span>
+          </div>
+        </div>
+        <div class="card-image">
+          <div class="phone-mockup"></div>
+          <button class="view-btn" onclick="showPage('page-case-study')">VIEW CASE STUDY</button>
+        </div>
+      </div>
+
+      <!-- Next Project Card -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Next Up</div>
+          <h3 class="card-title">New Project<br>In Progress</h3>
+          <p class="card-desc">
+            Transforming the parking experience from a daily stressor into a seamless,
+            60-second process — from finding a spot to paying for it.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Research Underway</span>
+          </div>
+        </div>
+        <div class="card-image-coming">
+          <span class="coming-label">Coming Soon</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="home-footer">
+    <div>
+      <div class="footer-name">Neeti Kaur</div>
+      <div class="footer-sub">Product Designer · Open to opportunities</div>
+      <div class="footer-copy">© 2025 Neeti Kaur. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:neetikdesigns@gmail.com" class="footer-link">neetikdesigns@gmail.com</a>
+      <a href="https://linkedin.com" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- ════════════════════════════════════
+     CASE STUDY PAGE
+════════════════════════════════════ -->
+<div id="page-case-study" class="page">
+
+  <nav class="cs-nav">
+    <button class="cs-home-btn" onclick="showPage('page-home')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Home
+    </button>
+  </nav>
+
+  <header class="cs-hero">
+    <div class="cs-eyebrow">Case Study — Flipkart Brand Stores</div>
+    <h1 class="cs-title">Brands Deserve<br>a <em>Home.</em></h1>
+    <p class="cs-subtitle">
+      A dedicated storefront inside India's largest e-commerce platform — designed to
+      solve a discoverability problem with an ₹80 lakh monthly revenue consequence.
+    </p>
+
+    <div class="cs-meta">
+      <div class="cs-meta-item">
+        <div class="cs-meta-label">My Role</div>
+        <div class="cs-meta-value">Solo Product Designer</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="cs-meta-label">Deliverables</div>
+        <div class="cs-meta-value">Research · UX · UI · Design Token</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="cs-meta-label">Platform</div>
+        <div class="cs-meta-value">Mobile App</div>
+      </div>
+      <div class="cs-meta-item">
+        <div class="cs-meta-label">Domain</div>
+        <div class="cs-meta-value">E-commerce · Brand Experience</div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">₹80L</div>
+        <div class="stat-label">Monthly GMV</div>
+        <div class="stat-sub">attributable to brand stores</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">4.3%</div>
+        <div class="stat-label">Click-Through Rate</div>
+        <div class="stat-sub">above category benchmark</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">65+</div>
+        <div class="stat-label">Stores Delivered</div>
+        <div class="stat-sub">production-ready, end-to-end</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="cs-body">
+
+    <!-- 01 Challenge -->
+    <section class="cs-section">
+      <div class="cs-section-num">01 — The Challenge</div>
+      <h2 class="cs-section-heading">How might we design a solution that helps brands manage unsold product <em>in a customer-focused way?</em></h2>
+      <p class="cs-section-body">
+        Every brand on Flipkart had the same problem: their bestsellers got all the attention,
+        and everything else stayed invisible. A shopper would find a popular product, buy it,
+        and leave — never knowing the same brand made dozens of other products that could
+        have been relevant to them.
+        <br><br>
+        This wasn't just a user experience problem. It was a platform economics problem with a
+        three-sided consequence — for brands, for Flipkart, and for shoppers.
+      </p>
+      <div class="three-col">
+        <div class="three-col-item">
+          <div class="three-col-title">Brands</div>
+          <div class="three-col-body">The business relied heavily on top-performing products, while the broader catalogue stayed hidden from users.</div>
+        </div>
+        <div class="three-col-item">
+          <div class="three-col-title">Flipkart</div>
+          <div class="three-col-body">A significant share of GMV was left untapped because many catalogue items were never surfaced to shoppers.</div>
+        </div>
+        <div class="three-col-item">
+          <div class="three-col-title">Shoppers</div>
+          <div class="three-col-body">Potentially relevant products were overlooked simply because they did not appear prominently in the shopping journey.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 Research -->
+    <section class="cs-section">
+      <div class="cs-section-num">02 — Research & Analysis</div>
+      <h2 class="cs-section-heading">Understanding the problem through the people <em>who live it.</em></h2>
+      <p class="cs-section-body">
+        We ran in-house user interviews, behavioral data analysis, and competitive benchmarking
+        to understand not just that products were invisible — but why. The research sharpened
+        the problem considerably.
+        <br><br>
+        This wasn't a content problem — it was a navigation and placement problem. Shoppers had
+        no natural path to a brand's wider catalog once they landed on any single product page.
+        Brands were guests in a crowded room, not hosts of their own space.
+      </p>
+      <div class="research-pills">
+        <div class="research-pill">In-house User Interview</div>
+        <div class="research-pill">Behavioral Data Analysis</div>
+        <div class="research-pill">Competitive Benchmarking</div>
+      </div>
+    </section>
+
+    <!-- 03 5W&H -->
+    <section class="cs-section">
+      <div class="cs-section-num">03 — 5W & H Framework</div>
+      <h2 class="cs-section-heading">Defining the problem<br><em>with precision.</em></h2>
+      <p class="cs-section-body">
+        Before designing anything, we framed the problem using the 5W &amp; H method — ensuring
+        every design decision was anchored to a real person, in a real context, with a real consequence.
+      </p>
+      <div class="fivew-grid">
+        <div class="fivew-item">
+          <div class="fivew-label">Who</div>
+          <div class="fivew-title">Brand-conscious Flipkart shoppers</div>
+          <div class="fivew-body">Users who want to explore a specific brand and its full product range — not just find one bestseller and leave.</div>
+        </div>
+        <div class="fivew-item">
+          <div class="fivew-label">What</div>
+          <div class="fivew-title">Cluttered results, no brand presence</div>
+          <div class="fivew-body">Cluttered search results, unclear official brand presence, fragmented product discovery, and repeated searching across categories.</div>
+        </div>
+        <div class="fivew-item">
+          <div class="fivew-label">Where</div>
+          <div class="fivew-title">Search results & product browsing</div>
+          <div class="fivew-body">The user is on Flipkart — mainly navigating through the search results page and the product browsing flow.</div>
+        </div>
+        <div class="fivew-item">
+          <div class="fivew-label">When</div>
+          <div class="fivew-title">After finding one product</div>
+          <div class="fivew-body">The problem occurs when users search for a brand, browse results, select a product — and then want to explore other categories from the same brand.</div>
+        </div>
+        <div class="fivew-item">
+          <div class="fivew-label">Why</div>
+          <div class="fivew-title">Trust, discovery, and revenue at stake</div>
+          <div class="fivew-body">It affects trust, slows down product discovery, reduces cross-sell opportunities, and creates a frustrating shopping experience.</div>
+        </div>
+        <div class="fivew-item">
+          <div class="fivew-label">How</div>
+          <div class="fivew-title">Search → browse → repeat</div>
+          <div class="fivew-body">Users search category + brand name, browse listings, pick one product, add it to cart — then repeat the entire process for every other category.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Competitive Audit -->
+    <section class="cs-section">
+      <div class="cs-section-num">04 — Competitive Audit</div>
+      <h2 class="cs-section-heading">What Myntra and Amazon got right — <em>and left open.</em></h2>
+      <p class="cs-section-body">
+        We benchmarked against Myntra and Amazon to understand how leading platforms handle brand
+        discovery — and where the gaps were that Flipkart could own.
+      </p>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Myntra</th>
+            <th>Amazon</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Platform Type</td><td>Fashion-first, brand-led shopping</td><td>Broad marketplace, strong variety</td></tr>
+          <tr><td>Strengths</td><td>Strong visual design, curated feel</td><td>Powerful search, organised catalog</td></tr>
+          <tr><td>Weaknesses</td><td>Only one entry point to brand store via search</td><td>Brand storytelling feels diluted at scale</td></tr>
+          <tr><td>Gaps</td><td>Brand store visibility missed if user doesn't notice it</td><td>Brand-led navigation isn't always seamless</td></tr>
+          <tr><td>Opportunities</td><td>Add entry points from product browser &amp; product page</td><td>Improve official brand visibility across categories</td></tr>
+        </tbody>
+      </table>
+      <div class="key-insights">
+        <div class="key-insights-label">Key Insights</div>
+        <div class="insight-item"><div class="insight-dot"></div><div class="insight-text">Myntra currently provides a single main entry point to the brand store via search.</div></div>
+        <div class="insight-item"><div class="insight-dot"></div><div class="insight-text">Amazon has a product page entry point such as "Visit Store" from the brand name.</div></div>
+        <div class="insight-item"><div class="insight-dot"></div><div class="insight-text">Our design opportunity: improve discoverability by introducing three entry points — search, product browser page, and product page.</div></div>
+      </div>
+    </section>
+
+    <!-- 05 User Journey -->
+    <section class="cs-section">
+      <div class="cs-section-num">05 — User Journey</div>
+      <h2 class="cs-section-heading">From a fragmented search loop to <em>a brand destination.</em></h2>
+      <p class="cs-section-body">
+        Mapping the current journey made the problem impossible to ignore. Every time a shopper wanted
+        to explore a brand, they had to start from zero — no continuity, no context, no path forward.
+      </p>
+      <div class="journey-grid">
+        <div class="journey-col">
+          <div class="journey-col-title">Before — Searching, bouncing, repeating.</div>
+          <div class="journey-step"><div class="journey-step-icon">🔍</div><div><div>Use search bar — type category + brand name</div><div class="journey-step-note">✗ Requires knowing the brand in advance</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">📋</div><div><div>Browse result page — mixed products from all brands</div><div class="journey-step-note">✗ No brand context, no curation</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">👆</div><div><div>Select a product from that category</div><div class="journey-step-note">✗ Lands on product detail — no brand path forward</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">🛒</div><div><div>Add to cart</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">🔄</div><div><div>Repeat entire flow for other categories</div><div class="journey-step-note">✗ Brand experience resets completely to zero</div></div></div>
+        </div>
+        <div class="journey-col">
+          <div class="journey-col-title">After — One destination, full catalog.</div>
+          <div class="journey-step"><div class="journey-step-icon">✨</div><div><div>Discover brand store via product page, search, or category browser</div><div class="journey-step-note">✓ Multiple entry points — no prior brand knowledge needed</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">🏠</div><div><div>Land on dedicated storefront — curated hero, identity, collections</div><div class="journey-step-note">✓ Brand as host — context before commerce</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">📦</div><div><div>Browse full catalog — organised by collection, not just popularity</div><div class="journey-step-note">✓ Non-popular products now have equal surfacing potential</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">↩️</div><div><div>Move into product detail — return to storefront without losing context</div><div class="journey-step-note">✓ Recoverable path — shoppers stay in the brand's world</div></div></div>
+          <div class="journey-step"><div class="journey-step-icon">🛒</div><div><div>Add to cart — continue exploring within the same brand space</div><div class="journey-step-note">✓ Discovery and transaction coexist without friction</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Problem Definition -->
+    <section class="cs-section">
+      <div class="cs-section-num">06 — Problem Definition</div>
+      <h2 class="cs-section-heading">Pains mapped to Needs —<br><em>the design brief.</em></h2>
+      <p class="cs-section-body">Each pain point from research was mapped to a corresponding user need. These pairs became the brief for every design decision.</p>
+      <div class="pain-need-list">
+        <div class="pain-need-item">
+          <div class="pain-side"><div class="pain-tag">Pain</div><div class="pain-text">Shoppers have no path to a brand's wider catalog from a product page</div></div>
+          <div class="need-side"><div class="need-tag">Need</div><div class="need-text">A dedicated brand space with a coherent navigation path to the full catalog</div></div>
+        </div>
+        <div class="pain-need-item">
+          <div class="pain-side"><div class="pain-tag">Pain</div><div class="pain-text">Non-popular products never surface alongside bestsellers</div></div>
+          <div class="need-side"><div class="need-tag">Need</div><div class="need-text">A curated page where all products have equal discovery potential</div></div>
+        </div>
+        <div class="pain-need-item">
+          <div class="pain-side"><div class="pain-tag">Pain</div><div class="pain-text">Brand identity is invisible — one brand looks identical to another</div></div>
+          <div class="need-side"><div class="need-tag">Need</div><div class="need-text">A branded destination with hero area, identity content, and storytelling modules</div></div>
+        </div>
+        <div class="pain-need-item">
+          <div class="pain-side"><div class="pain-tag">Pain</div><div class="pain-text">Moving from brand browsing to product and back breaks context entirely</div></div>
+          <div class="need-side"><div class="need-tag">Need</div><div class="need-text">A recoverable shopping path — seamless transit between storefront and product</div></div>
+        </div>
+        <div class="pain-need-item">
+          <div class="pain-side"><div class="pain-tag">Pain</div><div class="pain-text">Brands have no persistent presence — every visit starts from scratch</div></div>
+          <div class="need-side"><div class="need-tag">Need</div><div class="need-text">A permanent storefront accessible from multiple entry points across the platform</div></div>
+        </div>
+      </div>
+      <div class="rejected-box">
+        <div class="rejected-label">The First Idea — Rejected</div>
+        <div class="rejected-title">Idea: Feature products in "Deal of the Week" homepage section</div>
+        <div class="rejected-item"><span class="rejected-x">×</span> Only 2–3 cards per day — every other category competes for the same space</div>
+        <div class="rejected-item"><span class="rejected-x">×</span> Manual updates required every week — an operational burden that doesn't scale</div>
+        <div class="rejected-item"><span class="rejected-x">×</span> Maximum 2 brands simultaneously — doesn't address the catalog-wide problem</div>
+      </div>
+    </section>
+
+    <!-- 07 Solution -->
+    <section class="cs-section">
+      <div class="cs-section-num">07 — Solution</div>
+      <h2 class="cs-section-heading">Six friction points.<br><em>One destination.</em></h2>
+      <p class="cs-section-body">
+        Not a filtered product listing. Not a generic brand tab. A dedicated storefront — simultaneously a
+        marketing surface and a shopping surface — where brands could finally be hosts of their own space
+        inside Flipkart.
+      </p>
+      <div class="solution-grid">
+        <div class="solution-card">
+          <div class="solution-num">01</div>
+          <div class="solution-title">Branded Hero Area</div>
+          <div class="solution-desc">Identity zone with brand name, logo, tagline, and visuals that establish who the brand is before selling begins.</div>
+        </div>
+        <div class="solution-card">
+          <div class="solution-num">02</div>
+          <div class="solution-title">Curated Collections</div>
+          <div class="solution-desc">Products organised by collection and use case — not just popularity — giving every item equal discovery potential.</div>
+        </div>
+        <div class="solution-card">
+          <div class="solution-num">03</div>
+          <div class="solution-title">Multiple Entry Points</div>
+          <div class="solution-desc">Accessible from product pages, search results, and category browser — discovery happens naturally, not intentionally.</div>
+        </div>
+        <div class="solution-card">
+          <div class="solution-num">04</div>
+          <div class="solution-title">Recoverable Path</div>
+          <div class="solution-desc">Shoppers move from store to product and back without losing context. The brand's world remains reachable at every stage.</div>
+        </div>
+        <div class="solution-card">
+          <div class="solution-num">05</div>
+          <div class="solution-title">Brand Storytelling</div>
+          <div class="solution-desc">Banners, seasonal content, and messaging that give brands a voice beyond product specs — marketing within shopping.</div>
+        </div>
+        <div class="solution-card">
+          <div class="solution-num">06</div>
+          <div class="solution-title">Design System</div>
+          <div class="solution-desc">Reusable component library that allowed 65+ stores to be built at speed without sacrificing visual consistency.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 Business Goals -->
+    <section class="cs-section">
+      <div class="cs-section-num">08 — Business Goals</div>
+      <h2 class="cs-section-heading">Creating value at every end<br><em>of the ecosystem.</em></h2>
+      <div class="goals-grid">
+        <div class="goal-card">
+          <div class="goal-for">For Shoppers</div>
+          <div class="goal-heading">Discover more.</div>
+          <div class="goal-subheading">Decide faster.</div>
+          <div class="goal-body">A curated, context-rich destination that reduces decision fatigue and surfaces products shoppers didn't know they were looking for.</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-for">For Brands</div>
+          <div class="goal-heading">Own your space.</div>
+          <div class="goal-subheading">Grow your catalog.</div>
+          <div class="goal-body">A persistent brand presence on Flipkart — not a rented moment — where the full catalog gets equal exposure alongside bestsellers.</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-for">For Flipkart</div>
+          <div class="goal-heading">More GMV.</div>
+          <div class="goal-subheading">At scale.</div>
+          <div class="goal-body">A scalable storefront system generating compounding platform value with every new brand store launched.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 Results -->
+    <section class="cs-section">
+      <div class="cs-section-num">09 — Results</div>
+      <h2 class="cs-section-heading">When you give shoppers a path, they take it — <em>and they buy.</em></h2>
+      <p class="cs-section-body">These weren't vanity metrics on a new surface. They were proof that when shoppers have a coherent path to explore a brand's catalog, they take it.</p>
+      <div class="results-bar">
+        <div class="results-grid">
+          <div class="result-item">
+            <div class="result-label">Click Through Rate</div>
+            <div class="result-value">4.3%</div>
+            <div class="result-sub">above category benchmark</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Conversion Rate</div>
+            <div class="result-value">2.2%</div>
+            <div class="result-sub">attributable to brand stores</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Monthly GMV</div>
+            <div class="result-value">₹80L</div>
+            <div class="result-sub">attributable to brand stores</div>
+          </div>
+        </div>
+        <div class="results-note">
+          65+ production-ready brand store pages delivered across seasonal campaigns, category launches, and evergreen brand presences — all within a standardised design system built for speed and consistency.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 Reflection -->
+    <section class="cs-section">
+      <div class="cs-section-num">11 — Reflection</div>
+      <h2 class="cs-section-heading">What I <em>learned</em> building this</h2>
+      <div class="reflection-box">
+        <div class="quote-mark">"</div>
+        <div class="reflection-quote">Data sharpens judgments.<br><em>It doesn't replace it.</em></div>
+        <p class="reflection-body">
+          The "Deal of the Week" idea failed not because it was wrong to explore — but because we stress-tested
+          it honestly and found it solved the symptom, not the cause. Understanding why a problem exists before
+          deciding how to solve it is the most important lesson I carried out of this project.
+          <br><br>
+          Every decision was grounded in research and validated by outcomes. But data gave us the map. Judgment
+          helped us read it — and design something that worked not just for one brand, but for the sixty-five
+          that came after.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cs-footer">
+    <div>
+      <div class="cs-footer-name">Neeti Kaur</div>
+      <div class="cs-footer-sub">Product Designer · Open to opportunities</div>
+      <div style="font-size:11px;color:var(--border);margin-top:4px;">© 2025 Neeti Kaur. All rights reserved.</div>
+    </div>
+    <div class="cs-footer-links">
+      <a href="mailto:neetikdesigns@gmail.com" class="cs-footer-link">neetikdesigns@gmail.com</a>
+      <a href="https://linkedin.com" target="_blank" class="cs-footer-link">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(id);
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
